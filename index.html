@@ -1,0 +1,42 @@
+<html>
+  <head>
+    <script src='https://cdn.jsdelivr.net/npm/jzz'></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/incrementaldom/0.5.1/incremental-dom.js'></script>
+    <link href="https://fonts.googleapis.com/css?family=Rajdhani:300|Raleway" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4/lodash.min.js"></script>
+    <link rel="stylesheet" href="index.css">
+  </head>
+  <body>
+    <div class='App'>
+      <div class='Panel'>
+        <aside>
+          <h1>JAZZ + Web&nbsp;Bluetooth</h1>
+          <p>
+            Use Bluetooth MIDI Instruments with Chrome.
+          </p>
+          <h4>Requirements</h4>
+          <li><a href='https://www.google.com/chrome/'>Google Chrome</a></li>
+          <li><a href='https://jazz-soft.net/download/Jazz-Plugin/'>JAZZ Plugin</a></li>
+          <li><a href='https://chrome.google.com/webstore/detail/jazz-midi/jhdoobfdaejmldnpihidjemjcbpfmbkm'>JAZZ-Midi Chrome Extension</a></li>
+        </aside>
+        <main>
+          <div id='devices'>
+            <div id='devicesHeader'>
+              <h3>Devices</h3>
+              <button type='button' id='pair'>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                  <path d="M0 0h24v24H0z" fill="none"/>
+                  <path class='fill' d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/>
+                </svg>
+                Pair
+              </button>
+            </div>
+            <div id='devicesList'>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+    <script src='index.js'></script>
+  </body>
+</html>
