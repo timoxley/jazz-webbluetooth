@@ -85,25 +85,28 @@ function deviceConnected (data) {
   text(connected ? 'Connected' : 'Disconnected')
   elementClose('span')
 
-  elementOpen('div', `${id}-indicator`, [
+  elementOpen('data', `${id}-indicator`, [
     'class', 'indicator',
     'id', `${id}-indicator`
   ])
 
-  elementClose('div')
+  elementClose('data')
   elementClose('div')
 }
 
 function deviceEvent (id, data) {
-  port.send(data.slice(-3))
-  activity(id)
+  data = data.slice(-3)
+  port.send(data)
+  activity(id, data)
 }
 
-const activity = window._.throttle(function activity (id) {
+const activity = window._.throttle(function activity (id, data) {
+  const message = window.midimessage({ data })
   const cssID = window.CSS.escape(id)
   const parent = document.querySelector(`#${cssID}-indicator`)
   const el = document.createElement('div')
   el.classList.add('activity')
+  el.setAttribute('value', message.messageType)
   parent.appendChild(el)
   const fn = () => {
     parent.removeChild(el)
