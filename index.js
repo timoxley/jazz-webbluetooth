@@ -57,15 +57,22 @@ async function addController () {
 }
 
 function deviceRow (data) {
-  const { id, device } = data
+  const { id, device, server } = data
   console.log(data)
+  const connected = !!(server && server.connected)
 
+  elementOpen('div', id, [
+    'id', id
+  ], ...[
+    'class', `deviceRow ${connected ? 'connected' : 'disconnected'}`
+  ])
   elementOpen('div', `${id}-name`, [
     'itemprop', 'name'
   ])
   text(device.name)
   elementClose('div')
   deviceConnected(data)
+  elementClose('div')
 }
 
 function deviceConnected (data) {
@@ -116,7 +123,12 @@ const activity = window._.throttle(function activity (id, data) {
 }, 100)
 
 function render () {
+  const hasDevices = !!Object.keys(devices).length
+  pairButton.classList.toggle('noDevices', !hasDevices)
+  const emptyDevices = document.querySelector('#emptyDevices')
+  emptyDevices.classList.toggle('show', !hasDevices)
   const devicesList = document.querySelector('#devicesList')
+
   patch(devicesList, () => {
     Object.values(devices).forEach((device) => {
       deviceRow(device)
@@ -129,3 +141,4 @@ window.devices = devices
 const pairButton = document.querySelector('#pair')
 pairButton.addEventListener('click', tryAddController)
 pairButton.removeAttribute('disabled')
+render()

@@ -77,6 +77,15 @@ a:hover {
   min-height: 60vh;
 }
 
+main {
+  display: grid;
+}
+
+#devices {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+}
+
 aside {
   padding: 2rem 2rem;
   position: relative;
@@ -183,14 +192,113 @@ button path.fill {
   margin: 0;
 }
 
+#pair.noDevices {
+
+}
+
+#emptyDevices {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  font-style: italic;
+  flex-direction: column;
+  justify-content: center;
+  will-change: filter, color, opacity, transform;
+}
+
+#emptyDevices .content {
+  background: hsla(0, 0%, 100%, 0.01);
+  border-radius: 2px;
+  padding: 2rem 0;
+  align-self: stretch;
+  border-top: 1px solid hsla(0, 0%, 100%, 0.02);
+  border-bottom: 1px solid hsla(0, 0%, 0%, 0.02);
+  box-shadow: 1rem 1rem 1rem rgba(0, 0, 0, 0.01);
+}
+
+#emptyDevices p {
+  margin: 0;
+  margin-bottom: 1rem;
+}
+
+#emptyDevices:not(.show) {
+  animation: emptyOut 0.5s ease-out both;
+}
+
+#emptyDevices.show {
+  animation: emptyIn 0.5s ease-out both;
+}
+
 #devicesList {
+  display: grid;
+  grid-row-gap: 0.5rem;
+}
+
+.deviceRow {
   display: grid;
   grid-template-columns: 1fr auto;
   grid-row-gap: 0.5rem;
   align-items: center;
+  background: hsla(0, 0%, 100%, 0.01);
+  padding: 1rem 1rem;
+  margin: 0 -1rem;
+  border-radius: 2px;
+  animation: emptyIn 0.5s ease-out both;
+  border-top: 1px solid hsla(0, 0%, 100%, 0.02);
+  border-bottom: 1px solid hsla(0, 0%, 0%, 0.02);
+  box-shadow: 1rem 1rem 1rem rgba(0, 0, 0, 0.01);
 }
 
-#devicesList [itemprop=connected] {
+/*.deviceRow:first-child {*/
+/*}*/
+
+.deviceRow:last-child {
+}
+
+/*.deviceRow + .deviceRow {*/
+  /*border-top: 1px solid hsla(0, 0%, 100%, 0.02);*/
+/*}*/
+
+@keyframes emptyIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-100%);
+    filter: blur(10px);
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes emptyOut {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(100%);
+    filter: blur(10px);
+  }
+}
+
+.deviceRow.disconnected {
+  color: hsla(0, 0%, 40.9%, 1.0);
+  background: hsla(0, 0%, 90%, 0.01);
+}
+
+.deviceRow.disconnected [itemprop=name] {
+  text-decoration: line-through;
+}
+
+.deviceRow [itemprop=connected] {
   position: relative;
   display: flex;
   align-items: center;
@@ -226,7 +334,7 @@ button path.fill {
   }
 }
 
-#devicesList [itemprop=connected] > span {
+.deviceRow [itemprop=connected] > span {
   position: relative;
   margin-right: 1rem;
   transition: all ease-out 1s;
@@ -238,9 +346,13 @@ button path.fill {
     fadeOut 0.5s ease-in 4s forwards;
 }
 
-#devicesList [itemprop=connected] .indicator {
+.deviceRow [itemprop=connected][value=disconnected] > span {
+  animation: fade 0.5s ease-out both;
+}
+
+.deviceRow [itemprop=connected] .indicator {
   margin-left: 0rem;
-  margin-right: 1rem;
+  margin-right: 0.3rem;
   height: 6px;
   width: 6px;
   border: 1px solid transparent;
@@ -254,20 +366,22 @@ button path.fill {
     border 0.15s cubic-bezier(0.165, 0.84, 0.44, 1)
 }
 
-#devicesList [itemprop=connected][value=disconnected] .indicator {
-  border-color: hsla(3.8, 86.7%, 70.9%, 0.3);
+.deviceRow [itemprop=connected][value=disconnected] .indicator {
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
-#devicesList [itemprop=connected][value=connected] .indicator {
-
+.deviceRow [itemprop=connected] .indicator {
+  border-color: hsla(115, 0%, 50%, 0.1);
 }
 
-#devicesList [itemprop=connected][value=connected] .indicator:empty {
-  transition-delay: 0.5s;
-  border-color: hsla(115, 70%, 50%, 0.3);
+.deviceRow [itemprop=connected][value=connected] .indicator:empty {
+  transition-delay: 0.1s;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-in-out;
+  border-color: hsla(115, 0%, 50%, 0.3);
 }
 
-#devicesList [itemprop=connected][value=connected] .indicator .activity {
+.deviceRow [itemprop=connected][value=connected] .indicator .activity {
   border: 1px solid transparent;
   position: absolute;
   left: -1px;
@@ -275,25 +389,24 @@ button path.fill {
   top: -1px;
   bottom: -1px;
   border-radius: 100%;
+  mix-blend-mode: lighten;
 }
 
-#devicesList [itemprop=connected][value=connected] .indicator .activity[value^=control] {
+.deviceRow [itemprop=connected][value=connected] .indicator .activity[value^=control] {
   animation: activityControl 0.15s running alternate 2 both cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
-#devicesList [itemprop=connected][value=connected] .indicator .activity[value^=note] {
+.deviceRow [itemprop=connected][value=connected] .indicator .activity[value^=note] {
   animation: activityNote 0.15s running alternate 2 both cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
 @keyframes activityControl {
   0% {
     background: hsla(190.4, 62.2%, 50%, 0.0);
-    border-color: hsla(190.4, 62.2%, 50%, 0.0);
   }
   100% {
-    background: hsla(190.4, 62.2%, 50%, 1.0);
-    border-color: hsla(190.4, 62.2%, 50%, 1.0);
-    box-shadow: 0 0 2rem hsla(190.4, 92.2%, 50%, 1.0);
+    background: hsla(190.4, 62.2%, 50%, 0.9);
+    box-shadow: 0 0 2rem hsla(190.4, 92.2%, 50%, 0.5);
   }
 }
 
@@ -302,7 +415,7 @@ button path.fill {
     background: hsla(115, 70%, 60%, 0.0);
   }
   100% {
-    background: hsla(115, 70%, 60%, 1.0);
-    box-shadow: 0 0 2rem hsla(115, 70%, 60%, 0.3);
+    background: hsla(115, 70%, 60%, 0.9);
+    box-shadow: 0 0 2rem hsla(115, 70%, 60%, 0.5);
   }
 }
