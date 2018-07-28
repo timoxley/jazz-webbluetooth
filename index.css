@@ -1,5 +1,5 @@
 html {
-  font-size: 13px;
+  font-size: 14px;
 }
 
 html,
@@ -7,7 +7,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
-  color: #BBB;
+  color: #CCC;
   /*background:*/
             /*radial-gradient(ellipse at top left, hsla(240, 27%, 31%, 0.2), transparent),*/
             /*radial-gradient(ellipse at bottom right, hsla(317, 44%, 30%, 0.2), transparent);*/
