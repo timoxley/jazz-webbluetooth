@@ -189,6 +189,7 @@ function updateBatteryLevel (message) {
 }
 
 function logMessage (message) {
+  if (!window.DEBUG) return
   const { messageType, deviceID: id } = message
   if (messageType === 'controlchange') {
     const name = FreedrumCC[message.controllerNumber] || message.controllerNumber
