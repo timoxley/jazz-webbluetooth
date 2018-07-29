@@ -150,6 +150,8 @@ function onMidiIOEvent (event) {
     }
 
     const data = b.slice(-3)
+
+    port.send(data)
     const midi = window.midimessage({ data })
 
     const message = {
@@ -167,14 +169,9 @@ function onMidiIOEvent (event) {
 }
 
 function onMessage (message) {
-  sendMIDI(message)
   updateBatteryLevel(message)
   addActivity(message)
   logMessage(message)
-}
-
-function sendMIDI (message) {
-  port.send(message._data)
 }
 
 function updateBatteryLevel (message) {
