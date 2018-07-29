@@ -4,7 +4,10 @@
     <script src='https://ajax.googleapis.com/ajax/libs/incrementaldom/0.5.1/incremental-dom.js'></script>
     <link href="https://fonts.googleapis.com/css?family=Rajdhani:300|Raleway" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/lodash@4/lodash.min.js"></script>
+    <script src="https://unpkg.com/custom-context-menu@2.0.1/src/context-menu.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/midimessage"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jzz-midi-gm"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/2.5.94/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="index.css">
   </head>
   <body>
@@ -25,10 +28,7 @@
             <div id='devicesHeader'>
               <h3>Devices</h3>
               <button type='button' id='pair'>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                  <path d="M0 0h24v24H0z" fill="none"/>
-                  <path class='fill' d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/>
-                </svg>
+                <div class='mdi mdi-plus-circle'></div>
                 Pair
               </button>
             </div>
