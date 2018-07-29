@@ -339,9 +339,6 @@ function renderBatteryLevel (id, level = 'unknown') {
     level = 'alert'
     title = 'low'
   }
-  if (level > 90) {
-    level = 'full'
-  }
 
   if (Number(level)) {
     title = `${level}%`
