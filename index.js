@@ -74,17 +74,7 @@ function updateDevice (id, update = {}) {
 
 async function tryAddController () {
   try {
-    const id = await addController()
-    const { characteristics, device } = devices[id]
-
-    device.addEventListener('gattserverdisconnected', () => {
-      render()
-    })
-
-    const { MidiIO } = characteristics
-    MidiIO.addEventListener('characteristicvaluechanged', onMidiIOEvent)
-    await MidiIO.startNotifications()
-    updateDevice(id, { ready: true })
+    await addController()
     render()
   } catch (err) {
     console.error(err)
@@ -120,7 +110,16 @@ async function addController () {
   updateDevice(id, { services })
   const characteristics = await getCharacteristics(services)
   updateDevice(id, { characteristics })
-  return id
+
+  device.addEventListener('gattserverdisconnected', () => {
+    MidiIO.removeEventListener('characteristicvaluechanged', onMidiIOEvent)
+    render()
+  })
+
+  const { MidiIO } = characteristics
+  MidiIO.addEventListener('characteristicvaluechanged', onMidiIOEvent)
+  await MidiIO.startNotifications()
+  updateDevice(id, { ready: true })
 }
 
 async function getCharacteristics (services) {
